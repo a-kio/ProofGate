@@ -1,0 +1,30 @@
+{
+  "name": "@proofgate/core",
+  "version": "1.0.0",
+  "description": "ProofGate verification orchestration, status, and diagnostics",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "README.md"],
+  "sideEffects": false,
+  "engines": { "node": ">=22.0.0" },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@proofgate/config": "workspace:*",
+    "@proofgate/evidence": "workspace:*",
+    "@proofgate/project-detection": "workspace:*",
+    "@proofgate/shared": "workspace:*",
+    "@proofgate/storage": "workspace:*",
+    "@proofgate/verification": "workspace:*"
+  }
+}

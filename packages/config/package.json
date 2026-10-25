@@ -1,0 +1,27 @@
+{
+  "name": "@proofgate/config",
+  "version": "1.0.0",
+  "description": "ProofGate configuration schema, loading, intent hashing, and acceptance locking",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "README.md"],
+  "sideEffects": false,
+  "engines": { "node": ">=22.0.0" },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@proofgate/shared": "workspace:*",
+    "yaml": "^2.8.0",
+    "zod": "^4.6.7"
+  }
+}

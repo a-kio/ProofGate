@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "exactOptionalPropertyTypes": false,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@proofgate/shared": ["packages/shared/src/index.ts"],
+      "@proofgate/config": ["packages/config/src/index.ts"],
+      "@proofgate/project-detection": ["packages/project-detection/src/index.ts"],
+      "@proofgate/executor": ["packages/executor/src/index.ts"],
+      "@proofgate/verification": ["packages/verification/src/index.ts"],
+      "@proofgate/evidence": ["packages/evidence/src/index.ts"],
+      "@proofgate/storage": ["packages/storage/src/index.ts"],
+      "@proofgate/reporting": ["packages/reporting/src/index.ts"],
+      "@proofgate/integration-sdk": ["packages/integration-sdk/src/index.ts"],
+      "@proofgate/integrations": ["packages/integrations/src/index.ts"],
+      "@proofgate/core": ["packages/core/src/index.ts"],
+      "@proofgate/mcp-server": ["packages/mcp-server/src/index.ts"]
+    }
+  }
+}

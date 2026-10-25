@@ -1,0 +1,58 @@
+{
+  "name": "@proofgate/cli",
+  "version": "1.0.0",
+  "description": "ProofGate command line interface — independent verification for AI coding agents",
+  "license": "Apache-2.0",
+  "type": "module",
+  "bin": {
+    "proofgate": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "assets", "templates", "README.md"],
+  "engines": { "node": ">=22.0.0" },
+  "keywords": [
+    "ai",
+    "agents",
+    "verification",
+    "testing",
+    "claude-code",
+    "codex",
+    "opencode",
+    "mcp",
+    "ci"
+  ],
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --banner.js \"#!/usr/bin/env node\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.8.1",
+    "@hono/node-server": "^1.19.0",
+    "@proofgate/config": "workspace:*",
+    "@proofgate/core": "workspace:*",
+    "@proofgate/evidence": "workspace:*",
+    "@proofgate/integration-sdk": "workspace:*",
+    "@proofgate/integrations": "workspace:*",
+    "@proofgate/mcp-server": "workspace:*",
+    "@proofgate/project-detection": "workspace:*",
+    "@proofgate/reporting": "workspace:*",
+    "@proofgate/shared": "workspace:*",
+    "@proofgate/storage": "workspace:*",
+    "@proofgate/verification": "workspace:*",
+    "commander": "^14.0.0",
+    "hono": "^4.13.13",
+    "open": "^10.2.0",
+    "ora": "^9.0.0",
+    "picocolors": "^1.1.1",
+    "yaml": "^2.8.0",
+    "zod": "^4.6.7"
+  }
+}

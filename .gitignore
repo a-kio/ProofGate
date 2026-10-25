@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+apps/cli/assets/dashboard/
+release/
+*.tsbuildinfo
+
+# ProofGate runtime data
+.proofgate/runs/
+.proofgate/cache/
+.proofgate/locks/
+.proofgate/backups/
+.proofgate/hooks/
+.proofgate/events/
+.proofgate/integrations.json
+.proofgate/history.db
+.proofgate/history.json
+.proofgate/*.corrupt-*
+.proofgate/*.tmp-*
+
+# Test and coverage output
+coverage/
+test-results/
+playwright-report/
+blob-report/
+.vitest/
+
+# Local environment
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Agent scratch
+.agent/

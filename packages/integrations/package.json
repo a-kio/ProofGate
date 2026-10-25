@@ -1,0 +1,26 @@
+{
+  "name": "@proofgate/integrations",
+  "version": "1.0.0",
+  "description": "Native AI coding agent integrations for ProofGate",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "README.md"],
+  "sideEffects": false,
+  "engines": { "node": ">=22.0.0" },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@proofgate/integration-sdk": "workspace:*",
+    "@proofgate/shared": "workspace:*"
+  }
+}
