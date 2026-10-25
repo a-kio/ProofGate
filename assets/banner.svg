@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" width="1200" height="320" role="img" aria-labelledby="proofgate-banner-title">
+  <title id="proofgate-banner-title">ProofGate — AI wrote it. Prove it works.</title>
+  <defs>
+    <linearGradient id="gate" x1="54" y1="54" x2="202" y2="202" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0v32" fill="none" stroke="#16202c" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow-cyan" cx="0" cy="0" r="1" gradientTransform="translate(110 10) rotate(35) scale(360)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow-violet" cx="0" cy="0" r="1" gradientTransform="translate(1100 320) rotate(-35) scale(340)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#a78bfa" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#a78bfa" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="320" rx="24" fill="#0b0f14"/>
+  <rect width="1200" height="320" rx="24" fill="url(#grid)" opacity="0.55"/>
+  <rect width="1200" height="320" rx="24" fill="url(#glow-cyan)"/>
+  <rect width="1200" height="320" rx="24" fill="url(#glow-violet)"/>
+  <rect x="1" y="1" width="1198" height="318" rx="23" fill="none" stroke="#243244"/>
+
+  <g transform="translate(84 80) scale(0.62)">
+    <rect width="256" height="256" rx="58" fill="#0e1520" stroke="#243244" stroke-width="2"/>
+    <path d="M78 80h100M78 80v96M178 80v96" fill="none" stroke="url(#gate)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M101 130l21 21 43-45" fill="none" stroke="#f8fafc" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <text x="300" y="116" fill="#67e8f9" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="14" font-weight="600" letter-spacing="4">INDEPENDENT VERIFICATION FOR AI CODING AGENTS</text>
+  <text x="298" y="196" fill="#e6edf5" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="78" font-weight="700" letter-spacing="-2">ProofGate</text>
+  <text x="300" y="246" fill="#8b9bb0" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="28">AI wrote it. Prove it works.</text>
+  <text x="300" y="286" fill="#5b6b80" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" letter-spacing="3">LOCAL-FIRST · NO TELEMETRY · APACHE-2.0</text>
+</svg>

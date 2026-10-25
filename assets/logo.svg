@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="proofgate-logo-title proofgate-logo-desc">
+  <title id="proofgate-logo-title">ProofGate</title>
+  <desc id="proofgate-logo-desc">A gate frame with a checkmark inside it</desc>
+  <defs>
+    <radialGradient id="bg" cx="0" cy="0" r="1" gradientTransform="translate(66 48) rotate(45) scale(250)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#132435"/>
+      <stop offset="1" stop-color="#0b0f14"/>
+    </radialGradient>
+    <linearGradient id="gate" x1="54" y1="54" x2="202" y2="202" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="256" height="256" rx="58" fill="url(#bg)"/>
+  <rect x="1.5" y="1.5" width="253" height="253" rx="56.5" fill="none" stroke="#243244" stroke-width="1.5"/>
+  <path d="M78 80h100M78 80v96M178 80v96" fill="none" stroke="url(#gate)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M101 130l21 21 43-45" fill="none" stroke="#f8fafc" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+</svg>
