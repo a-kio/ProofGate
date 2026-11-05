@@ -1,5 +1,9 @@
 <div align="center">
-  <img src="./assets/logo.svg" width="88" height="88" alt="ProofGate" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/logo-white.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./assets/logo-black.svg">
+    <img src="./assets/logo-white.svg" width="96" height="96" alt="ProofGate" />
+  </picture>
   <h1>ProofGate</h1>
   <p><strong>AI wrote it. Prove it works.</strong></p>
   <p>Independent verification for AI coding agents.<br />

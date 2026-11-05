@@ -1,25 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="proofgate-logo-title proofgate-logo-desc">
-  <title id="proofgate-logo-title">ProofGate</title>
-  <desc id="proofgate-logo-desc">A gate frame with a checkmark inside it</desc>
-  <defs>
-    <radialGradient id="bg" cx="0" cy="0" r="1" gradientTransform="translate(66 48) rotate(45) scale(250)" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#132435"/>
-      <stop offset="1" stop-color="#0b0f14"/>
-    </radialGradient>
-    <linearGradient id="gate" x1="54" y1="54" x2="202" y2="202" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#22d3ee"/>
-      <stop offset="1" stop-color="#a78bfa"/>
-    </linearGradient>
-    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur stdDeviation="7" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-  </defs>
-  <rect width="256" height="256" rx="58" fill="url(#bg)"/>
-  <rect x="1.5" y="1.5" width="253" height="253" rx="56.5" fill="none" stroke="#243244" stroke-width="1.5"/>
-  <path d="M78 80h100M78 80v96M178 80v96" fill="none" stroke="url(#gate)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M101 130l21 21 43-45" fill="none" stroke="#f8fafc" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="100%" height="100%" role="img" aria-label="ProofGate Logo">
+  <title>ProofGate Logo</title>
+  <style>
+    :root {
+      --pg-logo-fill: #18181b;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --pg-logo-fill: #f4f4f5;
+      }
+    }
+    .proofgate-emblem {
+      fill: var(--pg-logo-fill, currentColor);
+      transition: fill 0.25s ease-in-out;
+    }
+  </style>
+  <path class="proofgate-emblem" fill="currentColor" fill-rule="evenodd" d="M 493,200 L 479,202 L 463,206 L 449,211 L 436,217 L 420,227 L 410,235 L 396,249 L 389,258 L 382,269 L 376,281 L 370,298 L 368,307 L 366,327 L 365,389 L 356,390 L 343,394 L 334,395 L 321,399 L 312,400 L 303,403 L 298,403 L 284,407 L 279,407 L 274,409 L 275,414 L 274,490 L 275,522 L 278,555 L 282,576 L 287,595 L 295,618 L 301,632 L 313,655 L 329,680 L 342,697 L 355,712 L 377,734 L 392,747 L 423,771 L 442,784 L 473,803 L 510,823 L 513,823 L 550,803 L 581,784 L 616,759 L 638,741 L 668,712 L 681,697 L 694,680 L 714,648 L 722,632 L 731,610 L 738,588 L 745,555 L 748,522 L 749,490 L 748,408 L 739,407 L 725,403 L 720,403 L 711,400 L 702,399 L 689,395 L 680,394 L 657,388 L 657,327 L 656,314 L 653,298 L 647,281 L 641,269 L 634,258 L 627,249 L 607,230 L 594,221 L 583,215 L 569,209 L 553,204 L 530,200 Z M 430,306 L 438,292 L 449,280 L 465,269 L 480,263 L 495,260 L 528,260 L 543,263 L 554,267 L 563,272 L 574,280 L 585,292 L 593,306 L 596,315 L 598,330 L 597,373 L 589,372 L 575,367 L 554,362 L 513,349 L 502,351 L 469,362 L 462,363 L 455,366 L 448,367 L 434,372 L 430,372 L 429,373 L 425,372 L 425,330 L 427,315 Z M 689,453 L 689,530 L 687,553 L 683,574 L 674,601 L 664,622 L 654,639 L 641,657 L 615,686 L 596,703 L 572,722 L 550,737 L 522,754 L 511,759 L 501,754 L 458,727 L 427,703 L 407,685 L 382,657 L 369,639 L 353,610 L 345,590 L 340,574 L 335,546 L 334,530 L 335,452 L 357,448 L 404,437 L 408,435 L 420,433 L 483,416 L 510,407 L 513,407 L 540,416 L 607,434 L 615,435 L 619,437 L 644,443 L 684,451 Z M 492,486 L 484,490 L 472,501 L 466,510 L 461,527 L 462,542 L 468,557 L 474,565 L 486,575 L 486,578 L 484,582 L 483,589 L 479,600 L 477,611 L 471,629 L 469,640 L 466,647 L 465,654 L 558,654 L 557,647 L 554,640 L 552,629 L 546,611 L 544,600 L 540,589 L 537,575 L 549,565 L 555,557 L 558,551 L 561,542 L 562,535 L 562,527 L 559,515 L 557,510 L 551,501 L 543,493 L 531,486 L 521,483 L 513,482 L 502,483 Z"/>
 </svg>
