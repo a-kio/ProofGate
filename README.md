@@ -9,10 +9,10 @@
   <p>Independent verification for AI coding agents.<br />
   Real commands. Human-owned acceptance. Hash-manifested evidence.</p>
   <p>
-    <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT license" /></a>
-    <a href="https://nodejs.org"><img src="https://img.shields.io/badge/node-%E2%89%A522-339933.svg" alt="Node.js 22 or newer" /></a>
-    <img src="https://img.shields.io/badge/status-alpha-orange.svg" alt="Alpha" />
-    <img src="https://img.shields.io/badge/local--first-no%20telemetry-22c55e.svg" alt="Local-first, no telemetry" />
+    <a href="LICENSE"><img src="./assets/badges/license.svg" alt="MIT License" height="28" /></a>
+    <a href="https://nodejs.org"><img src="./assets/badges/node.svg" alt="Node.js ≥22" height="28" /></a>
+    <img src="./assets/badges/status.svg" alt="Status: Alpha" height="28" />
+    <img src="./assets/badges/privacy.svg" alt="Privacy: Local-First, Zero Telemetry" height="28" />
   </p>
 </div>
 
