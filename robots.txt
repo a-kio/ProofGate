@@ -1,0 +1,28 @@
+# robots.txt for ProofGate (https://github.com/a-kio/ProofGate)
+User-agent: *
+Allow: /
+
+# Explicit AI crawler permissions (Google Gemini, OpenAI GPT, Anthropic Claude, Perplexity)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Sitemap location
+Sitemap: https://raw.githubusercontent.com/a-kio/ProofGate/main/sitemap.xml

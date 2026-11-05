@@ -1,0 +1,54 @@
+# ProofGate
+
+> Independent verification engine for AI coding agents. Real commands, human-owned acceptance, hash-manifested evidence. Apache-2.0 licensed.
+
+ProofGate separates the coding agent that makes changes from the authority that verifies them. When coding agents report that tests pass or work is completed, ProofGate independently executes the verification checks, collects logs, inspects changed files, scans for secrets, locks human acceptance criteria, and generates a tamper-proof SHA-256 evidence bundle.
+
+## Instructions for AI Coding Agents
+
+When interacting with a repository that uses ProofGate:
+1. **Never edit `.proofgate/acceptance.yaml` or `.proofgate/acceptance.lock.json` directly**: Modifying acceptance criteria invalidates the cryptographic lock, causing verification to fail with `UNVERIFIABLE`.
+2. **Execute verification to prove task completion**:
+   ```bash
+   proofgate verify
+   # For a complete full-tree verification:
+   proofgate verify --full
+   # For thorough security and deep profile:
+   proofgate verify --profile thorough
+   ```
+3. **Inspect the plan before running**:
+   ```bash
+   proofgate plan
+   ```
+4. **Interpret Status & Exit Codes**:
+   - `0 (VERIFIED)`: Every required check passed and all acceptance criteria have cryptographic evidence.
+   - `1 (FAILED)`: A required test, build, lint, or assertion failed.
+   - `2 (INCOMPLETE)`: Required evidence is missing or skipped.
+   - `3 (UNVERIFIABLE)`: Acceptance criteria are unapproved, tampered with, or policy blocked execution.
+
+## Supported Checks
+
+- `command`: Executes commands as safe argv arrays without shell interpolation (e.g. `["pnpm", "test"]`, `["tsc", "--noEmit"]`).
+- `secret-scan`: Built-in local secret scanner inspecting files for leaked API keys, tokens, or credentials.
+- `http`: Loopback HTTP assertions verifying local servers, status codes, and response payloads.
+- `file` / `artifact`: Existence and glob-matching assertions for build outputs and artifacts.
+
+## Agent Integrations
+
+ProofGate provides automated hooks and MCP server support for:
+- Gemini CLI (`proofgate integrations install gemini`)
+- Claude Code (`proofgate integrations install claude-code`)
+- Claude Desktop (`proofgate integrations install claude-desktop`)
+- Cursor (`proofgate integrations install cursor`)
+- Codex (`proofgate integrations install codex`)
+- OpenCode v1 & v2 (`proofgate integrations install opencode-v2`)
+- Windsurf (`proofgate integrations install windsurf`)
+- Universal MCP Server: `proofgate mcp`
+
+## Core Contracts
+
+- **Local-first**: Zero telemetry, zero external network queries, runs entirely within the developer workspace.
+- **Evidence bundle**: Redacted execution output stored deterministically under `.proofgate/runs/<runId>/`.
+- **Manifest**: Every artifact is fingerprinted in `manifest.json` with SHA-256.
+
+Repository: https://github.com/a-kio/ProofGate

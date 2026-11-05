@@ -49,5 +49,57 @@
     "vite": "^7.0.0",
     "vitest": "^5.0.5",
     "@vitest/coverage-v8": "^5.0.5"
-  }
+  },
+  "keywords": [
+    "proofgate",
+    "ai-agent",
+    "ai-agents",
+    "coding-agent",
+    "coding-agents",
+    "verification",
+    "independent-verification",
+    "acceptance-criteria",
+    "acceptance-testing",
+    "evidence-bundle",
+    "anti-hallucination",
+    "claude-code",
+    "cursor",
+    "cursor-ai",
+    "gemini-cli",
+    "codex",
+    "opencode",
+    "windsurf",
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "test-runner",
+    "ci-cd",
+    "devops",
+    "software-quality",
+    "sha256-manifest",
+    "tamper-proof",
+    "local-first",
+    "zero-telemetry",
+    "developer-tools",
+    "node",
+    "typescript",
+    "cli",
+    "dashboard",
+    "vitest",
+    "jest",
+    "playwright",
+    "ai-safety",
+    "agentic-workflow",
+    "code-review",
+    "gatekeeper"
+  ],
+  "homepage": "https://github.com/a-kio/ProofGate",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/a-kio/ProofGate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/a-kio/ProofGate/issues"
+  },
+  "author": "a-kio"
 }
