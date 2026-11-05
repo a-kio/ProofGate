@@ -12,7 +12,7 @@
     <a href="LICENSE"><img src="./assets/badges/license.svg" alt="MIT License" height="28" /></a>
     <a href="https://nodejs.org"><img src="./assets/badges/node.svg" alt="Node.js ≥22" height="28" /></a>
     <img src="./assets/badges/status.svg" alt="Status: Alpha" height="28" />
-    <img src="./assets/badges/privacy.svg" alt="Privacy: Local-First, Zero Telemetry" height="28" />
+    <img src="./assets/badges/privacy.svg" alt="Local-first, no telemetry" height="28" />
   </p>
 </div>
 

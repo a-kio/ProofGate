@@ -1,24 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="138" height="28" viewBox="0 0 138 28" fill="none" role="img" aria-label="License: MIT">
+<svg xmlns="http://www.w3.org/2000/svg" width="130" height="28" viewBox="0 0 130 28" fill="none" role="img" aria-label="License: MIT">
   <title>License: MIT</title>
-  <style>
-    .bg { fill: #161b22; stroke: #30363d; }
-    .label { fill: #8b949e; }
-    .icon { stroke: #818cf8; }
-    @media (prefers-color-scheme: light) {
-      .bg { fill: #f6f8fa; stroke: #d0d7de; }
-      .label { fill: #656d76; }
-      .icon { stroke: #6366f1; }
-    }
-  </style>
-  <defs>
-    <linearGradient id="grad-mit" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#6366f1"/>
-      <stop offset="100%" stop-color="#8b5cf6"/>
-    </linearGradient>
-  </defs>
-  <rect width="138" height="28" rx="6" class="bg" stroke-width="1"/>
-  <path d="M12 9v10m-3-3l3 3 3-3" class="icon" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="23" y="17.5" class="label" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10.5" font-weight="600" letter-spacing="0.5">LICENSE</text>
-  <rect x="78" y="4" width="56" height="20" rx="4" fill="url(#grad-mit)"/>
-  <text x="106" y="17.5" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">MIT</text>
+  <clipPath id="lic_clip"><rect width="130" height="28" rx="6"/></clipPath>
+  <g clip-path="url(#lic_clip)">
+    <rect width="130" height="28" fill="#181d26"/>
+    <svg x="10" y="6" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+      <path fill="#e2e8f0" d="M11.959.447A11.938 11.938 0 000 12.407c0 5.576 3.874 10.097 7.783 11.114.193.05.392-.05.467-.234l2.771-6.822a.396.396 0 00-.246-.528C9.365 15.47 8.53 14.32 8.48 12.4c-.024-1.828 1.5-3.45 3.561-3.447 1.931.003 3.479 1.632 3.479 3.453 0 .966-.203 1.687-.575 2.238-.371.552-.922.951-1.695 1.239a.396.396 0 00-.23.515l2.685 6.903a.396.396 0 00.465.24C20.163 22.534 24 18.062 24 12.406 24 5.804 18.603.447 11.959.447zm0 .791c6.22 0 11.25 4.997 11.25 11.168 0 5.138-3.423 9.208-6.895 10.272L13.9 16.47c.703-.308 1.302-.79 1.702-1.384.477-.708.709-1.602.709-2.68 0-2.266-1.898-4.24-4.27-4.244-2.48-.004-4.382 1.976-4.352 4.25.023 1.995.934 3.492 2.451 4.13L7.648 22.66C4.251 21.592.791 17.458.791 12.406A11.13 11.13 0 0111.959 1.238z"/>
+    </svg>
+    <text x="32" y="18" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600" letter-spacing="0.3px">license</text>
+    <rect x="76" width="54" height="28" fill="#2563eb"/>
+    <text x="103" y="18" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11.5" font-weight="700" text-anchor="middle" letter-spacing="0.4px">MIT</text>
+  </g>
+  <rect width="130" height="28" rx="6" fill="none" stroke="#333b47" stroke-width="1"/>
 </svg>

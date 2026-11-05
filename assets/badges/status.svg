@@ -1,25 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="154" height="28" viewBox="0 0 154 28" fill="none" role="img" aria-label="Status: Alpha">
+<svg xmlns="http://www.w3.org/2000/svg" width="134" height="28" viewBox="0 0 134 28" fill="none" role="img" aria-label="Status: Alpha">
   <title>Status: Alpha</title>
-  <style>
-    .bg { fill: #161b22; stroke: #30363d; }
-    .label { fill: #8b949e; }
-    .pulse-halo { stroke: #f59e0b; }
-    @media (prefers-color-scheme: light) {
-      .bg { fill: #f6f8fa; stroke: #d0d7de; }
-      .label { fill: #656d76; }
-      .pulse-halo { stroke: #d97706; }
-    }
-  </style>
-  <defs>
-    <linearGradient id="grad-alpha" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#f59e0b"/>
-      <stop offset="100%" stop-color="#ea580c"/>
-    </linearGradient>
-  </defs>
-  <rect width="154" height="28" rx="6" class="bg" stroke-width="1"/>
-  <circle cx="14" cy="14" r="3" fill="#f59e0b"/>
-  <circle cx="14" cy="14" r="5.5" class="pulse-halo" stroke-opacity="0.3" stroke-width="1"/>
-  <text x="26" y="17.5" class="label" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10.5" font-weight="600" letter-spacing="0.5">STATUS</text>
-  <rect x="80" y="4" width="70" height="20" rx="4" fill="url(#grad-alpha)"/>
-  <text x="115" y="17.5" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">ALPHA</text>
+  <clipPath id="stat_clip"><rect width="134" height="28" rx="6"/></clipPath>
+  <g clip-path="url(#stat_clip)">
+    <rect width="134" height="28" fill="#181d26"/>
+    <circle cx="16" cy="14" r="4" fill="#f59e0b" aria-hidden="true"/>
+    <text x="28" y="18" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600" letter-spacing="0.3px">status</text>
+    <rect x="72" width="62" height="28" fill="#d97706"/>
+    <text x="103" y="18" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11.5" font-weight="700" text-anchor="middle" letter-spacing="0.4px">alpha</text>
+  </g>
+  <rect width="134" height="28" rx="6" fill="none" stroke="#333b47" stroke-width="1"/>
 </svg>
