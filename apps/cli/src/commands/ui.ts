@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -30,16 +31,15 @@ function findUiDir(root: string): string | null {
     path.join(__dirname, "ui"),
     path.join(__dirname, "..", "ui"),
     path.join(__dirname, "..", "..", "dashboard", "dist"),
+    path.join(__dirname, "..", "..", "..", "apps", "dashboard", "dist"),
     path.join(root, "apps", "dashboard", "dist"),
   ];
   for (const c of candidates) {
-    try {
+    if (fs.existsSync(path.join(c, "index.html"))) {
       return c;
-    } catch {
-      // try next
     }
   }
-  return candidates[0] ?? null;
+  return null;
 }
 
 export async function uiCommand(targetDir = ".", options: UiCommandOptions = {}): Promise<void> {

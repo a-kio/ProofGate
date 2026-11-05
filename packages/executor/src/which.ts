@@ -3,10 +3,14 @@ import path from "node:path";
 
 const isWindows = process.platform === "win32";
 
-function pathExtensions(): string[] {
+function pathExtensions(command?: string): string[] {
   if (!isWindows) return [""];
   const raw = process.env.PATHEXT ?? ".COM;.EXE;.BAT;.CMD";
-  return ["", ...raw.split(";").filter(Boolean)];
+  const list = raw.split(";").filter(Boolean);
+  if (command && path.extname(command)) {
+    return ["", ...list];
+  }
+  return [...list, ""];
 }
 
 function isExecutableFile(filePath: string): boolean {
@@ -21,8 +25,8 @@ function isExecutableFile(filePath: string): boolean {
   }
 }
 
-function tryWithExtensions(base: string): string | undefined {
-  for (const extension of pathExtensions()) {
+function tryWithExtensions(base: string, command?: string): string | undefined {
+  for (const extension of pathExtensions(command ?? base)) {
     const candidate = `${base}${extension}`;
     if (isExecutableFile(candidate)) return candidate;
   }
@@ -53,20 +57,31 @@ export function resolveCommand(
   const cwd = options.cwd ?? process.cwd();
   if (command.includes("/") || command.includes("\\")) {
     const candidate = path.isAbsolute(command) ? command : path.resolve(cwd, command);
-    return tryWithExtensions(candidate) ?? null;
+    return tryWithExtensions(candidate, command) ?? null;
   }
   if (options.preferLocal !== false) {
     for (const binDir of localBinDirs(cwd)) {
-      const found = tryWithExtensions(path.join(binDir, command));
+      const found = tryWithExtensions(path.join(binDir, command), command);
       if (found) return found;
     }
   }
   const pathValue = process.env.PATH ?? process.env.Path ?? "";
   const delimiter = isWindows ? ";" : ":";
-  for (const rawDir of pathValue.split(delimiter)) {
+  const searchDirs = pathValue.split(delimiter);
+  if (isWindows) {
+    if (process.env.APPDATA) {
+      searchDirs.push(path.join(process.env.APPDATA, "npm"));
+    }
+    if (process.env.LOCALAPPDATA) {
+      searchDirs.push(path.join(process.env.LOCALAPPDATA, "pnpm"));
+    }
+    const programFiles = process.env.ProgramFiles ?? "C:\\Program Files";
+    searchDirs.push(path.join(programFiles, "nodejs"));
+  }
+  for (const rawDir of searchDirs) {
     const dir = rawDir.trim().replace(/^"|"$/g, "");
     if (!dir) continue;
-    const found = tryWithExtensions(path.join(dir, command));
+    const found = tryWithExtensions(path.join(dir, command), command);
     if (found) return found;
   }
   return null;

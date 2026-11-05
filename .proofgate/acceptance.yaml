@@ -1,0 +1,43 @@
+# ProofGate acceptance criteria — what "done" means for this task.
+#
+# Agents must not edit this file. Changes invalidate the approval lock and
+# cause verification to return UNVERIFIABLE until a human runs:
+#
+#   proofgate criteria approve
+#
+# Kinds:
+#   check    — a named check from config.yaml must pass
+#   artifact — at least one file matching each glob must exist
+#   manual   — requires human sign-off; blocks VERIFIED only when required
+version: 1
+task: Initial task verification for ProofGate
+criteria:
+  - id: typecheck-passes
+    description: TypeScript typecheck completes successfully
+    kind: check
+    check: typecheck
+    required: true
+  - id: lint-passes
+    description: Lint completes successfully
+    kind: check
+    check: lint
+    required: true
+  - id: test-passes
+    description: Test suite completes successfully
+    kind: check
+    check: test
+    required: true
+  - id: build-passes
+    description: Production build completes successfully
+    kind: check
+    check: build
+    required: true
+  - id: secret-scan-passes
+    description: No committed secrets in changed files completes successfully
+    kind: check
+    check: secret-scan
+    required: true
+  - id: human-signoff
+    description: A human reviewed the diff and the evidence bundle
+    kind: manual
+    required: false

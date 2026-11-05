@@ -2,7 +2,7 @@
   "name": "@proofgate/mcp-server",
   "version": "1.0.0",
   "description": "ProofGate stdio MCP server for agent integration",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

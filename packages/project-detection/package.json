@@ -2,7 +2,7 @@
   "name": "@proofgate/project-detection",
   "version": "1.0.0",
   "description": "Project, ecosystem, tooling, and Git change detection for ProofGate",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

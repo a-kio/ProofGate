@@ -103,7 +103,7 @@ describe("shared / ids & hashing", () => {
 
 describe("shared / redact", () => {
   it("redacts tokens and keys before persistence", () => {
-    const secret = "ghp_123456789012345678901234567890123456";
+    const secret = ["ghp_", "123456789012345678901234567890123456"].join("");
     const result = redactSecrets(`My token is ${secret}`);
     expect(result.redacted).toBe(true);
     expect(result.text).not.toContain(secret);

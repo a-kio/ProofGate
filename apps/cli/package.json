@@ -2,7 +2,7 @@
   "name": "@proofgate/cli",
   "version": "1.0.0",
   "description": "ProofGate command line interface — independent verification for AI coding agents",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "bin": {
     "proofgate": "./dist/index.js"

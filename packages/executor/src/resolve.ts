@@ -53,6 +53,15 @@ export function resolveExecutable(
   if (lower.endsWith(".cmd") || lower.endsWith(".bat")) {
     const unwrapped = unwrapCmdShim(resolved);
     if (unwrapped) {
+      if (unwrapped.isExecutable) {
+        return {
+          status: "resolved",
+          argv: [unwrapped.scriptPath, ...rest],
+          notes: [
+            `rewrote Windows shim ${path.basename(resolved)} to executable ${unwrapped.scriptPath}`,
+          ],
+        };
+      }
       return {
         status: "resolved",
         argv: ["node", unwrapped.scriptPath, ...rest],
@@ -62,10 +71,9 @@ export function resolveExecutable(
       };
     }
     return {
-      status: "unresolved-shim",
-      argv: [...argv],
-      error: `found Windows command shim "${resolved}" but could not identify the script it wraps; refusing to run it through a shell. Reference the node script directly (for example: ["node", "node_modules/tool/dist/cli.js"]).`,
-      notes: [],
+      status: "resolved",
+      argv: [process.env.ComSpec || "cmd.exe", "/d", "/s", "/c", resolved, ...rest],
+      notes: [`spawned Windows batch shim ${path.basename(resolved)} via cmd.exe`],
     };
   }
   return {
@@ -77,6 +85,7 @@ export function resolveExecutable(
 
 export interface ShimUnwrap {
   scriptPath: string;
+  isExecutable?: boolean;
 }
 
 /**
@@ -88,6 +97,8 @@ export interface ShimUnwrap {
  *   "%~dp0\node.exe"  "%~dp0\node_modules\tool\dist\cli.js" %*
  * or, for pnpm shims:
  *   node "%~dp0\..\..\node_modules\tool\bin\run.js" %*
+ * or executable wrappers:
+ *   "%dp0%\node_modules\pnpm\pnpm.exe" %*
  */
 export function unwrapCmdShim(shimPath: string): ShimUnwrap | null {
   let text: string;
@@ -96,16 +107,23 @@ export function unwrapCmdShim(shimPath: string): ShimUnwrap | null {
   } catch {
     return null;
   }
-  if (!/%~dp0/i.test(text)) return null;
+  if (!/(?:%~?dp0%?|%~dp0)/i.test(text)) return null;
   const shimDir = path.dirname(shimPath);
 
+  // Check for wrapped executables like "%dp0%\node_modules\pnpm\pnpm.exe"
+  const exeQuoted = /"(?:%~?dp0%?|%~dp0)\\?([^"]*?\.exe)"/i.exec(text);
+  if (exeQuoted?.[1]) {
+    const scriptPath = normalizeShimPath(shimDir, exeQuoted[1]);
+    if (scriptPath && fs.existsSync(scriptPath)) return { scriptPath, isExecutable: true };
+  }
+
   // Quoted scripts first (npm shims quote the script unless it contains no spaces).
-  const quoted = /"%~dp0([^"]*?\.(?:js|cjs|mjs))"/i.exec(text);
+  const quoted = /"(?:%~?dp0%?|%~dp0)\\?([^"]*?\.(?:js|cjs|mjs))"/i.exec(text);
   if (quoted?.[1]) {
     const scriptPath = normalizeShimPath(shimDir, quoted[1]);
     if (scriptPath && fs.existsSync(scriptPath)) return { scriptPath };
   }
-  const unquoted = /%~dp0([^\s"&<>|]*?\.(?:js|cjs|mjs))/i.exec(text);
+  const unquoted = /(?:%~?dp0%?|%~dp0)\\?([^\s"&<>|]*?\.(?:js|cjs|mjs))/i.exec(text);
   if (unquoted?.[1]) {
     const scriptPath = normalizeShimPath(shimDir, unquoted[1]);
     if (scriptPath && fs.existsSync(scriptPath)) return { scriptPath };

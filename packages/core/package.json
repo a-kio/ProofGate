@@ -2,7 +2,7 @@
   "name": "@proofgate/core",
   "version": "1.0.0",
   "description": "ProofGate verification orchestration, status, and diagnostics",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

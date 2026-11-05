@@ -2,7 +2,7 @@
   "name": "@proofgate/config",
   "version": "1.0.0",
   "description": "ProofGate configuration schema, loading, intent hashing, and acceptance locking",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

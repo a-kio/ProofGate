@@ -2,7 +2,7 @@
   "name": "@proofgate/integrations",
   "version": "1.0.0",
   "description": "Native AI coding agent integrations for ProofGate",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

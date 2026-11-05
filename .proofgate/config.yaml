@@ -1,0 +1,116 @@
+# ProofGate — independent verification for AI coding agents
+# Docs: https://github.com/a-kio/ProofGate/blob/main/docs/configuration.md
+#
+# Checks run as argv arrays, never through a shell. Review commands before use.
+# After editing checks or acceptance criteria, run `proofgate criteria approve`.
+version: 1
+project:
+  name: ProofGate
+verification:
+  profile: balanced
+  changedProfile: fast
+  ignorePaths: []
+checks:
+  - id: typecheck
+    title: TypeScript typecheck
+    required: true
+    profiles:
+      - fast
+      - balanced
+      - thorough
+    cache: true
+    appliesTo:
+      - "**/*.{ts,tsx,js,jsx,mjs,cjs,mts,cts,json,vue,svelte,astro}"
+    type: command
+    run:
+      - pnpm
+      - run
+      - typecheck
+    expectExitCode:
+      - 0
+  - id: lint
+    title: Lint
+    required: true
+    profiles:
+      - fast
+      - balanced
+      - thorough
+    cache: true
+    appliesTo:
+      - "**/*.{ts,tsx,js,jsx,mjs,cjs,mts,cts,json,css,scss,md,vue,svelte,astro}"
+    type: command
+    run:
+      - pnpm
+      - run
+      - lint
+    expectExitCode:
+      - 0
+  - id: test
+    title: Test suite
+    required: true
+    profiles:
+      - fast
+      - balanced
+      - thorough
+    cache: true
+    appliesTo:
+      - "**/*.{ts,tsx,js,jsx,mjs,cjs,py,rs,go,java,cs,rb,php}"
+    type: command
+    run:
+      - pnpm
+      - run
+      - test
+    expectExitCode:
+      - 0
+  - id: build
+    title: Production build
+    required: true
+    profiles:
+      - balanced
+      - thorough
+    cache: true
+    appliesTo:
+      - "**/*.{ts,tsx,js,jsx,mjs,cjs,mts,cts,json,vue,svelte,astro}"
+      - "**/*.{css,scss,html,md}"
+    type: command
+    run:
+      - pnpm
+      - run
+      - build
+    expectExitCode:
+      - 0
+  - id: secret-scan
+    title: No committed secrets in changed files
+    required: true
+    profiles:
+      - fast
+      - balanced
+      - thorough
+    cache: true
+    type: secret-scan
+    paths:
+      - "**/*"
+    maxFileBytes: 512000
+limits:
+  timeoutSeconds: 600
+  maxParallelChecks: 4
+  maxOutputBytes: 2097152
+policy:
+  onFailure: report
+  concurrentRuns: dedupe
+  failureFeedback: summary
+  retryLimit: 2
+  optionalFailures: block
+guards:
+  forbiddenPaths: []
+  protectAcceptance: true
+cache:
+  enabled: true
+  maxEntries: 500
+  maxAgeDays: 30
+retention:
+  maxRuns: 100
+  maxAgeDays: 90
+integrations:
+  scope: project
+  invoker: auto

@@ -895,7 +895,8 @@ export default function App() {
 
       {/* Footer */}
       <footer className="border-t border-[#27272a] py-6 text-center text-xs text-zinc-500 font-mono">
-        ProofGate · Real commands. Human-owned acceptance. Hash-manifested evidence. · MIT License
+        ProofGate · Real commands. Human-owned acceptance. Hash-manifested evidence. · Apache-2.0
+        License
       </footer>
     </div>
   );

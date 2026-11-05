@@ -1,9 +1,11 @@
 import { spawn } from "node:child_process";
 import fs from "node:fs";
+import path from "node:path";
 import type { OutputChunk } from "@proofgate/shared";
 import { formatDuration, nowIso } from "@proofgate/shared";
 import { execa } from "execa";
 import { OutputCollector } from "./collector.js";
+import { resolveExecutable } from "./resolve.js";
 import { formatCommand } from "./which.js";
 
 const isWindows = process.platform === "win32";
@@ -42,6 +44,22 @@ function buildEnv(overrides: Record<string, string> | undefined): Record<string,
   const env: Record<string, string> = {};
   for (const [key, value] of Object.entries(process.env)) {
     if (typeof value === "string") env[key] = value;
+  }
+  if (isWindows) {
+    const extraDirs: string[] = [];
+    if (process.env.APPDATA) {
+      extraDirs.push(path.join(process.env.APPDATA, "npm"));
+    }
+    if (process.env.LOCALAPPDATA) {
+      extraDirs.push(path.join(process.env.LOCALAPPDATA, "pnpm"));
+    }
+    const programFiles = process.env.ProgramFiles ?? "C:\\Program Files";
+    extraDirs.push(path.join(programFiles, "nodejs"));
+    const currentPath = env.PATH ?? env.Path ?? "";
+    const toAdd = extraDirs.filter((d) => !currentPath.toLowerCase().includes(d.toLowerCase()));
+    if (toAdd.length > 0) {
+      env.PATH = `${toAdd.join(";")};${currentPath}`;
+    }
   }
   Object.assign(env, overrides ?? {});
   env.PROOFGATE = "1";
@@ -143,7 +161,11 @@ export async function runCommand(options: RunCommandOptions): Promise<CommandRes
   let hardKillTimer: NodeJS.Timeout | undefined;
   let abortListener: (() => void) | undefined;
 
-  const subprocess = execa(argv[0], argv.slice(1), {
+  const resolved = resolveExecutable(argv, { cwd });
+  const execArgv = resolved && resolved.status === "resolved" ? resolved.argv : argv;
+  const [file = "", ...args] = execArgv;
+
+  const subprocess = execa(file, args, {
     cwd,
     env: buildEnv(options.env),
     extendEnv: false,

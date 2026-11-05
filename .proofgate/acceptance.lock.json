@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "approvedAt": "2026-11-05T13:20:03.123Z",
+  "approvedBy": "init",
+  "acceptanceFileHash": "91f9285ea06cba0f2c2aa59c318bb85e8e23b234ae4a5e64bb4e37543c77ee2e",
+  "approvals": [
+    {
+      "profile": "balanced",
+      "intentHash": "b3684b7406057260cc1a1e0ccadbe8fbea912f3907f47640b1b9187888de0852",
+      "approvedAt": "2026-11-05T13:20:03.123Z",
+      "approvedBy": "init"
+    },
+    {
+      "profile": "fast",
+      "intentHash": "1c0b74a0b18d3c5dc4401660dcd92ab0b3054bd21b7050991eaca77a6bde3fb2",
+      "approvedAt": "2026-11-05T13:20:03.123Z",
+      "approvedBy": "init"
+    },
+    {
+      "profile": "thorough",
+      "intentHash": "bb8eceb728c11ec3d8cf270f4c6949be6b6c5ef96f8beb033de2c5f0dfa03302",
+      "approvedAt": "2026-11-05T13:20:03.123Z",
+      "approvedBy": "init"
+    }
+  ],
+  "snapshot": {
+    "task": "Initial task verification for ProofGate",
+    "criteria": [
+      {
+        "id": "typecheck-passes",
+        "description": "TypeScript typecheck completes successfully",
+        "kind": "check",
+        "check": "typecheck",
+        "required": true
+      },
+      {
+        "id": "lint-passes",
+        "description": "Lint completes successfully",
+        "kind": "check",
+        "check": "lint",
+        "required": true
+      },
+      {
+        "id": "test-passes",
+        "description": "Test suite completes successfully",
+        "kind": "check",
+        "check": "test",
+        "required": true
+      },
+      {
+        "id": "build-passes",
+        "description": "Production build completes successfully",
+        "kind": "check",
+        "check": "build",
+        "required": true
+      },
+      {
+        "id": "secret-scan-passes",
+        "description": "No committed secrets in changed files completes successfully",
+        "kind": "check",
+        "check": "secret-scan",
+        "required": true
+      },
+      {
+        "id": "human-signoff",
+        "description": "A human reviewed the diff and the evidence bundle",
+        "kind": "manual",
+        "required": false
+      }
+    ],
+    "checks": [
+      {
+        "id": "typecheck",
+        "title": "TypeScript typecheck",
+        "type": "command",
+        "required": true,
+        "profiles": [
+          "fast",
+          "balanced",
+          "thorough"
+        ]
+      },
+      {
+        "id": "lint",
+        "title": "Lint",
+        "type": "command",
+        "required": true,
+        "profiles": [
+          "fast",
+          "balanced",
+          "thorough"
+        ]
+      },
+      {
+        "id": "test",
+        "title": "Test suite",
+        "type": "command",
+        "required": true,
+        "profiles": [
+          "fast",
+          "balanced",
+          "thorough"
+        ]
+      },
+      {
+        "id": "build",
+        "title": "Production build",
+        "type": "command",
+        "required": true,
+        "profiles": [
+          "balanced",
+          "thorough"
+        ]
+      },
+      {
+        "id": "secret-scan",
+        "title": "No committed secrets in changed files",
+        "type": "secret-scan",
+        "required": true,
+        "profiles": [
+          "fast",
+          "balanced",
+          "thorough"
+        ]
+      }
+    ],
+    "policy": {
+      "onFailure": "report",
+      "concurrentRuns": "dedupe",
+      "failureFeedback": "summary",
+      "retryLimit": 2,
+      "optionalFailures": "block"
+    },
+    "profile": "fast"
+  },
+  "toolVersion": "1.0.0"
+}
