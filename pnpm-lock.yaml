@@ -177,9 +177,15 @@ importers:
       '@proofgate/evidence':
         specifier: workspace:*
         version: link:../evidence
+      '@proofgate/executor':
+        specifier: workspace:*
+        version: link:../executor
       '@proofgate/project-detection':
         specifier: workspace:*
         version: link:../project-detection
+      '@proofgate/reporting':
+        specifier: workspace:*
+        version: link:../reporting
       '@proofgate/shared':
         specifier: workspace:*
         version: link:../shared
@@ -251,14 +257,20 @@ importers:
       '@proofgate/core':
         specifier: workspace:*
         version: link:../core
-      '@proofgate/evidence':
+      '@proofgate/integrations':
         specifier: workspace:*
-        version: link:../evidence
-      '@proofgate/verification':
+        version: link:../integrations
+      '@proofgate/project-detection':
         specifier: workspace:*
-        version: link:../verification
+        version: link:../project-detection
+      '@proofgate/shared':
+        specifier: workspace:*
+        version: link:../shared
+      '@proofgate/storage':
+        specifier: workspace:*
+        version: link:../storage
       zod:
-        specifier: ^4.0.0
+        specifier: ^4.6.7
         version: 4.6.7
 
   packages/project-detection:

@@ -5,7 +5,7 @@
   <p>Independent verification for AI coding agents.<br />
   Real commands. Human-owned acceptance. Hash-manifested evidence.</p>
   <p>
-    <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue.svg" alt="Apache-2.0 license" /></a>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT license" /></a>
     <a href="https://nodejs.org"><img src="https://img.shields.io/badge/node-%E2%89%A522-339933.svg" alt="Node.js 22 or newer" /></a>
     <img src="https://img.shields.io/badge/status-alpha-orange.svg" alt="Alpha" />
     <img src="https://img.shields.io/badge/local--first-no%20telemetry-22c55e.svg" alt="Local-first, no telemetry" />
@@ -18,12 +18,12 @@
 
 ## The 30-second version
 
-| The usual agent loop | With ProofGate |
-| --- | --- |
-| The agent says the tests pass. | ProofGate runs them and records the exit code, output, and duration. |
+| The usual agent loop                 | With ProofGate                                                                |
+| ------------------------------------ | ----------------------------------------------------------------------------- |
+| The agent says the tests pass.       | ProofGate runs them and records the exit code, output, and duration.          |
 | The agent decides what "done" means. | A human approves the acceptance criteria; the approval is hashed per profile. |
-| A failure becomes a paragraph. | A failure becomes `FAIL`, with findings, evidence, and a non-zero exit code. |
-| "Green" is a claim. | `VERIFIED` is a rule. |
+| A failure becomes a paragraph.       | A failure becomes `FAIL`, with findings, evidence, and a non-zero exit code.  |
+| "Green" is a claim.                  | `VERIFIED` is a rule.                                                         |
 
 ## Why
 
@@ -76,38 +76,38 @@ flowchart LR
 
 Green is a claim. These are the definitions.
 
-| Check status | Meaning |
-| --- | --- |
-| `PASS` | The check ran and every expectation was met. |
-| `FAIL` | The check ran and an expectation was not met. |
-| `UNKNOWN` | The check produced no reliable verdict. |
-| `SKIPPED` | The check was excluded by profile, applicability, a failed dependency, or a guard. |
-| `BLOCKED` | Policy prevented execution, for example unapproved acceptance or a forbidden path. |
-| `ERROR` | ProofGate or the environment could not execute the check. |
+| Check status | Meaning                                                                            |
+| ------------ | ---------------------------------------------------------------------------------- |
+| `PASS`       | The check ran and every expectation was met.                                       |
+| `FAIL`       | The check ran and an expectation was not met.                                      |
+| `UNKNOWN`    | The check produced no reliable verdict.                                            |
+| `SKIPPED`    | The check was excluded by profile, applicability, a failed dependency, or a guard. |
+| `BLOCKED`    | Policy prevented execution, for example unapproved acceptance or a forbidden path. |
+| `ERROR`      | ProofGate or the environment could not execute the check.                          |
 
-| Overall status | Exit | Meaning |
-| --- | --- | --- |
-| `VERIFIED` | `0` | Every required check passed and every required criterion has evidence. |
-| `FAILED` | `1` | A required check or criterion failed. |
-| `INCOMPLETE` | `2` | Required evidence is missing or skipped, a required manual sign-off is absent, or an optional check failed under `policy.optionalFailures: block`. |
-| `UNVERIFIABLE` | `3` | Acceptance is not approved, policy blocked the run, or a required check could not run (`BLOCKED` / `ERROR`). |
+| Overall status | Exit | Meaning                                                                                                                                            |
+| -------------- | ---- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `VERIFIED`     | `0`  | Every required check passed and every required criterion has evidence.                                                                             |
+| `FAILED`       | `1`  | A required check or criterion failed.                                                                                                              |
+| `INCOMPLETE`   | `2`  | Required evidence is missing or skipped, a required manual sign-off is absent, or an optional check failed under `policy.optionalFailures: block`. |
+| `UNVERIFIABLE` | `3`  | Acceptance is not approved, policy blocked the run, or a required check could not run (`BLOCKED` / `ERROR`).                                       |
 
 `SKIPPED` and `UNKNOWN` never count as success. A plan with no checks is `UNVERIFIABLE`, not `VERIFIED`. A required `ERROR` is an infrastructure problem, so it is `UNVERIFIABLE` rather than a failed test.
 
 ## What it checks
 
-| Type | What it proves | Details |
-| --- | --- | --- |
-| `command` | A process ran and produced the expected result. | `argv` only, no shell; `cwd`; `env`; expected exit codes; `stdout` / `stderr` regex; timeout; dependency order. |
-| `http` | An endpoint answered as expected. | Status codes and response-body assertions. Loopback only unless `allowRemote: true`. |
-| `files` | Artifacts exist, or do not, at the expected size. | Positive globs, `minBytes`, `maxBytes`, `mustNotExist`. |
-| `secret-scan` | The change set contains no credentials. | Built-in plus custom patterns, an allowlist, and a per-file size cap. Never cached. |
+| Type          | What it proves                                    | Details                                                                                                         |
+| ------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `command`     | A process ran and produced the expected result.   | `argv` only, no shell; `cwd`; `env`; expected exit codes; `stdout` / `stderr` regex; timeout; dependency order. |
+| `http`        | An endpoint answered as expected.                 | Status codes and response-body assertions. Loopback only unless `allowRemote: true`.                            |
+| `files`       | Artifacts exist, or do not, at the expected size. | Positive globs, `minBytes`, `maxBytes`, `mustNotExist`.                                                         |
+| `secret-scan` | The change set contains no credentials.           | Built-in plus custom patterns, an allowlist, and a per-file size cap. Never cached.                             |
 
 Command checks are cached only after a real `PASS`. A cache hit is bound to the exact check definition, profile, intent, config, changed-file tree, resolved tool and version, lockfiles, project root, environment, and Node/platform — not just a timestamp.
 
 ## Acceptance is human-owned
 
-`config.yaml` describes *how* to verify. `acceptance.yaml` describes *what done means* for the current task.
+`config.yaml` describes _how_ to verify. `acceptance.yaml` describes _what done means_ for the current task.
 
 ```yaml
 version: 1
@@ -168,18 +168,18 @@ Retention defaults to 100 runs and 90 days. The store uses `node:sqlite` when th
 
 ## Integrations
 
-| Integration | MCP | Automatic completion check | Scope | Notes |
-| --- | --- | --- | --- | --- |
-| **Claude Code** | Yes | Yes — `Stop` hook | project / user | Run `/hooks` once to review and trust the hook. |
-| **Claude Desktop** | Yes | No | user | MCP only; restart the app after installing. |
-| **Codex CLI** | Yes | No | project / user | MCP plus `AGENTS.md` guidance; hook trust is left to the user. |
-| **OpenCode v1** | Yes | Yes — plugin on `session.idle` | project / user | Reports asynchronously; reinstall after a major upgrade. |
-| **OpenCode v2** | Yes | Yes — `Plugin.define` | project / user | Reports asynchronously; reinstall after a major upgrade. |
-| **Cursor** | Yes | Partial — stop hook | project / user | Hook behavior varies by Cursor version. |
-| **Gemini CLI** | Yes | Yes — `AfterAgent` hook | project / user | Hook output is strict JSON; ProofGate complies. |
-| **Windsurf** | Yes | No | user | No documented hook API, so verification is on demand. |
-| **Generic CLI** | Optional | Optional wrapper | project | Writes instructions, an `AGENTS.md` block, and an optional hook wrapper. |
-| **Universal MCP** | Yes | No | project | Portable `.mcp.json` entry for any MCP-capable client. |
+| Integration        | MCP      | Automatic completion check     | Scope          | Notes                                                                    |
+| ------------------ | -------- | ------------------------------ | -------------- | ------------------------------------------------------------------------ |
+| **Claude Code**    | Yes      | Yes — `Stop` hook              | project / user | Run `/hooks` once to review and trust the hook.                          |
+| **Claude Desktop** | Yes      | No                             | user           | MCP only; restart the app after installing.                              |
+| **Codex CLI**      | Yes      | No                             | project / user | MCP plus `AGENTS.md` guidance; hook trust is left to the user.           |
+| **OpenCode v1**    | Yes      | Yes — plugin on `session.idle` | project / user | Reports asynchronously; reinstall after a major upgrade.                 |
+| **OpenCode v2**    | Yes      | Yes — `Plugin.define`          | project / user | Reports asynchronously; reinstall after a major upgrade.                 |
+| **Cursor**         | Yes      | Partial — stop hook            | project / user | Hook behavior varies by Cursor version.                                  |
+| **Gemini CLI**     | Yes      | Yes — `AfterAgent` hook        | project / user | Hook output is strict JSON; ProofGate complies.                          |
+| **Windsurf**       | Yes      | No                             | user           | No documented hook API, so verification is on demand.                    |
+| **Generic CLI**    | Optional | Optional wrapper               | project        | Writes instructions, an `AGENTS.md` block, and an optional hook wrapper. |
+| **Universal MCP**  | Yes      | No                             | project        | Portable `.mcp.json` entry for any MCP-capable client.                   |
 
 Integration installs are non-destructive:
 
@@ -252,7 +252,7 @@ checks:
     profiles: ["thorough"]
 
 policy:
-  onFailure: report      # report | block
+  onFailure: report # report | block
   optionalFailures: block # block | warn
   retryLimit: 2
 
@@ -277,21 +277,21 @@ Profiles are cumulative in intent: `fast` is the quick gate, `balanced` adds the
 
 The target interface is small on purpose.
 
-| Command | Purpose |
-| --- | --- |
-| `proofgate init` | Detect the project, propose checks, write config and acceptance, and install agent instructions. |
-| `proofgate verify` | Run the plan, write evidence, print the verdict, and return its exit code. |
-| `proofgate status` | Show the latest run, active lock, acceptance approval, and cache state. |
-| `proofgate report` | Render a stored run as terminal, JSON, Markdown, HTML, or GitHub output. |
-| `proofgate ui` | Open the local dashboard. |
-| `proofgate doctor` | Diagnose the environment, config, tools, and integrations. |
-| `proofgate setup` | Guided setup for agents and CI. |
-| `proofgate integrations` | Add, remove, list, or diagnose agent integrations. |
-| `proofgate config` | Read, validate, and explain configuration. |
-| `proofgate criteria` | List, diff, and approve acceptance criteria. |
-| `proofgate update` | Update ProofGate and migrate project state. |
-| `proofgate uninstall` | Remove integrations and local ProofGate state. |
-| `proofgate mcp` | Run the stdio MCP server. |
+| Command                  | Purpose                                                                                          |
+| ------------------------ | ------------------------------------------------------------------------------------------------ |
+| `proofgate init`         | Detect the project, propose checks, write config and acceptance, and install agent instructions. |
+| `proofgate verify`       | Run the plan, write evidence, print the verdict, and return its exit code.                       |
+| `proofgate status`       | Show the latest run, active lock, acceptance approval, and cache state.                          |
+| `proofgate report`       | Render a stored run as terminal, JSON, Markdown, HTML, or GitHub output.                         |
+| `proofgate ui`           | Open the local dashboard.                                                                        |
+| `proofgate doctor`       | Diagnose the environment, config, tools, and integrations.                                       |
+| `proofgate setup`        | Guided setup for agents and CI.                                                                  |
+| `proofgate integrations` | Add, remove, list, or diagnose agent integrations.                                               |
+| `proofgate config`       | Read, validate, and explain configuration.                                                       |
+| `proofgate criteria`     | List, diff, and approve acceptance criteria.                                                     |
+| `proofgate update`       | Update ProofGate and migrate project state.                                                      |
+| `proofgate uninstall`    | Remove integrations and local ProofGate state.                                                   |
+| `proofgate mcp`          | Run the stdio MCP server.                                                                        |
 
 The core verification loop will be:
 
@@ -359,22 +359,22 @@ flowchart TB
   SDK --> SH
 ```
 
-| Package | Responsibility | State |
-| --- | --- | --- |
-| `@proofgate/shared` | Types, statuses, constants, hashing, redaction, paths, text utilities | Implemented |
-| `@proofgate/config` | Zod schema, YAML loading, intent hashing, acceptance locking | Implemented |
-| `@proofgate/project-detection` | Ecosystem, package manager, tools, workspaces, Git changes | Implemented |
-| `@proofgate/executor` | Shell-free process execution, output collection, binary resolution | Implemented |
-| `@proofgate/verification` | Planning, checks, cache, guards, criteria, status derivation | Implemented |
-| `@proofgate/evidence` | Redacted evidence bundles, manifests, verification, pruning | Implemented |
-| `@proofgate/storage` | Run persistence, SQLite/JSON backends, retention | Implemented |
-| `@proofgate/reporting` | Terminal, JSON, Markdown, HTML, GitHub, JSON Schemas | Implemented |
-| `@proofgate/integration-sdk` | Atomic writes, backups, rollback, JSONC/TOML, hook wrappers | Implemented |
-| `@proofgate/integrations` | Ten agent adapters and a registry | Adapters written |
-| `@proofgate/core` | End-to-end orchestration and public operations | In progress |
-| `@proofgate/mcp-server` | Stdio MCP tools for agents | In progress |
-| `apps/cli` | Commander CLI, prompts, hook formatting | In progress |
-| `apps/dashboard` | React/Vite/Tailwind local UI | In progress |
+| Package                        | Responsibility                                                        | State            |
+| ------------------------------ | --------------------------------------------------------------------- | ---------------- |
+| `@proofgate/shared`            | Types, statuses, constants, hashing, redaction, paths, text utilities | Implemented      |
+| `@proofgate/config`            | Zod schema, YAML loading, intent hashing, acceptance locking          | Implemented      |
+| `@proofgate/project-detection` | Ecosystem, package manager, tools, workspaces, Git changes            | Implemented      |
+| `@proofgate/executor`          | Shell-free process execution, output collection, binary resolution    | Implemented      |
+| `@proofgate/verification`      | Planning, checks, cache, guards, criteria, status derivation          | Implemented      |
+| `@proofgate/evidence`          | Redacted evidence bundles, manifests, verification, pruning           | Implemented      |
+| `@proofgate/storage`           | Run persistence, SQLite/JSON backends, retention                      | Implemented      |
+| `@proofgate/reporting`         | Terminal, JSON, Markdown, HTML, GitHub, JSON Schemas                  | Implemented      |
+| `@proofgate/integration-sdk`   | Atomic writes, backups, rollback, JSONC/TOML, hook wrappers           | Implemented      |
+| `@proofgate/integrations`      | Ten agent adapters and a registry                                     | Adapters written |
+| `@proofgate/core`              | End-to-end orchestration and public operations                        | In progress      |
+| `@proofgate/mcp-server`        | Stdio MCP tools for agents                                            | In progress      |
+| `apps/cli`                     | Commander CLI, prompts, hook formatting                               | In progress      |
+| `apps/dashboard`               | React/Vite/Tailwind local UI                                          | In progress      |
 
 ## Design decisions
 
@@ -437,7 +437,7 @@ ProofGate executes commands from a project-owned config file. Treat that file wi
 
 ## License
 
-Apache-2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
+MIT. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
 
 ---
 

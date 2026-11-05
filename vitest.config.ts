@@ -21,10 +21,7 @@ const packages = [
 export default defineConfig({
   resolve: {
     alias: Object.fromEntries(
-      packages.map((name) => [
-        `@proofgate/${name}`,
-        `${root}packages/${name}/src/index.ts`,
-      ]),
+      packages.map((name) => [`@proofgate/${name}`, `${root}packages/${name}/src/index.ts`]),
     ),
   },
   test: {

@@ -1,10 +1,10 @@
-import YAML from 'yaml'
-import type { AcceptanceFile, CheckConfig, ProofGateConfig } from './schema.js'
+import YAML from "yaml";
+import type { AcceptanceFile, CheckConfig, ProofGateConfig } from "./schema.js";
 
 export interface InitialConfigOptions {
-  projectName?: string
-  checks: CheckConfig[]
-  profile?: ProofGateConfig['verification']['profile']
+  projectName?: string;
+  checks: CheckConfig[];
+  profile?: ProofGateConfig["verification"]["profile"];
 }
 
 export function buildInitialConfig(options: InitialConfigOptions): ProofGateConfig {
@@ -12,24 +12,24 @@ export function buildInitialConfig(options: InitialConfigOptions): ProofGateConf
     version: 1,
     project: options.projectName ? { name: options.projectName } : {},
     verification: {
-      profile: options.profile ?? 'balanced',
-      changedProfile: 'fast',
+      profile: options.profile ?? "balanced",
+      changedProfile: "fast",
       ignorePaths: [],
     },
     checks: options.checks,
     limits: { timeoutSeconds: 600, maxParallelChecks: 4, maxOutputBytes: 2 * 1024 * 1024 },
     policy: {
-      onFailure: 'report',
-      concurrentRuns: 'dedupe',
-      failureFeedback: 'summary',
+      onFailure: "report",
+      concurrentRuns: "dedupe",
+      failureFeedback: "summary",
       retryLimit: 2,
-      optionalFailures: 'block',
+      optionalFailures: "block",
     },
     guards: { forbiddenPaths: [], protectAcceptance: true },
     cache: { enabled: true, maxEntries: 500, maxAgeDays: 30 },
     retention: { maxRuns: 100, maxAgeDays: 90 },
-    integrations: { scope: 'project', invoker: 'auto' },
-  }
+    integrations: { scope: "project", invoker: "auto" },
+  };
 }
 
 export function buildInitialAcceptance(
@@ -37,76 +37,76 @@ export function buildInitialAcceptance(
   checks: CheckConfig[],
   artifactPatterns: string[] = [],
 ): AcceptanceFile {
-  const requiredChecks = checks.filter((check) => check.required)
-  const criteria: AcceptanceFile['criteria'] = requiredChecks.map((check) => ({
+  const requiredChecks = checks.filter((check) => check.required);
+  const criteria: AcceptanceFile["criteria"] = requiredChecks.map((check) => ({
     id: `${check.id}-passes`,
     description: `${check.title ?? check.id} completes successfully`,
-    kind: 'check' as const,
+    kind: "check" as const,
     check: check.id,
     required: true,
-  }))
+  }));
   if (artifactPatterns.length > 0) {
     criteria.push({
-      id: 'artifacts-exist',
-      description: 'Expected build artifacts exist and are non-empty',
-      kind: 'artifact',
+      id: "artifacts-exist",
+      description: "Expected build artifacts exist and are non-empty",
+      kind: "artifact",
       artifacts: artifactPatterns,
       required: true,
-    })
+    });
   }
   criteria.push({
-    id: 'human-signoff',
-    description: 'A human reviewed the diff and the evidence bundle',
-    kind: 'manual',
+    id: "human-signoff",
+    description: "A human reviewed the diff and the evidence bundle",
+    kind: "manual",
     required: false,
-  })
+  });
   if (criteria.length === 0) {
     criteria.push({
-      id: 'checks-pass',
-      description: 'The configured verification plan passes',
-      kind: 'check',
+      id: "checks-pass",
+      description: "The configured verification plan passes",
+      kind: "check",
       required: true,
-    })
+    });
   }
-  return { version: 1, task, criteria }
+  return { version: 1, task, criteria };
 }
 
 export function renderAcceptanceYaml(acceptance: AcceptanceFile): string {
   const header = [
     '# ProofGate acceptance criteria — what "done" means for this task.',
-    '#',
-    '# Agents must not edit this file. Changes invalidate the approval lock and',
-    '# cause verification to return UNVERIFIABLE until a human runs:',
-    '#',
-    '#   proofgate criteria approve',
-    '#',
-    '# Kinds:',
-    '#   check    — a named check from config.yaml must pass',
-    '#   artifact — at least one file matching each glob must exist',
-    '#   manual   — requires human sign-off; blocks VERIFIED only when required',
-    '',
-  ].join('\n')
-  return `${header}${YAML.stringify(acceptance, { lineWidth: 120 })}`
+    "#",
+    "# Agents must not edit this file. Changes invalidate the approval lock and",
+    "# cause verification to return UNVERIFIABLE until a human runs:",
+    "#",
+    "#   proofgate criteria approve",
+    "#",
+    "# Kinds:",
+    "#   check    — a named check from config.yaml must pass",
+    "#   artifact — at least one file matching each glob must exist",
+    "#   manual   — requires human sign-off; blocks VERIFIED only when required",
+    "",
+  ].join("\n");
+  return `${header}${YAML.stringify(acceptance, { lineWidth: 120 })}`;
 }
 
-export function renderAgentsBlock(version = '1'): string {
+export function renderAgentsBlock(version = "1"): string {
   return [
-    '<!-- proofgate:start -->',
-    '## Verification contract',
-    '',
-    'This repository uses ProofGate. A completion claim is not accepted on the strength of the',
-    'agent’s own summary. Before saying a task is finished:',
-    '',
-    '1. Run `npx proofgate verify --changed` (or the project-configured command).',
-    '2. Read the result. `VERIFIED` is the only status that means done.',
-    '3. If it returns `FAILED`, fix the failure and verify again.',
-    '4. If it returns `INCOMPLETE` or `UNVERIFIABLE`, report why. Do not claim done.',
-    '5. Do not edit `.proofgate/acceptance.yaml`, `.proofgate/acceptance.lock.json`, or',
-    '   weaken `.proofgate/config.yaml` to make checks pass. Approval is a human action.',
-    '',
+    "<!-- proofgate:start -->",
+    "## Verification contract",
+    "",
+    "This repository uses ProofGate. A completion claim is not accepted on the strength of the",
+    "agent’s own summary. Before saying a task is finished:",
+    "",
+    "1. Run `npx proofgate verify --changed` (or the project-configured command).",
+    "2. Read the result. `VERIFIED` is the only status that means done.",
+    "3. If it returns `FAILED`, fix the failure and verify again.",
+    "4. If it returns `INCOMPLETE` or `UNVERIFIABLE`, report why. Do not claim done.",
+    "5. Do not edit `.proofgate/acceptance.yaml`, `.proofgate/acceptance.lock.json`, or",
+    "   weaken `.proofgate/config.yaml` to make checks pass. Approval is a human action.",
+    "",
     `ProofGate contract v${version}. Generated by \`proofgate init\`; re-run to update this block.`,
-    '<!-- proofgate:end -->',
-  ].join('\n')
+    "<!-- proofgate:end -->",
+  ].join("\n");
 }
 
 export function renderWorkflowYaml(): string {
@@ -138,5 +138,5 @@ jobs:
         with:
           profile: thorough
           comment: "true"
-`
+`;
 }

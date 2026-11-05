@@ -1,17 +1,17 @@
-import fs from 'node:fs'
-import path from 'node:path'
-import { resolveCommand } from './which.js'
+import fs from "node:fs";
+import path from "node:path";
+import { resolveCommand } from "./which.js";
 
-export type ResolveStatus = 'resolved' | 'not-found' | 'unresolved-shim'
+export type ResolveStatus = "resolved" | "not-found" | "unresolved-shim";
 
 export interface ResolvedExecutable {
-  status: ResolveStatus
+  status: ResolveStatus;
   /** argv with argv[0] replaced by an absolute executable path (or a node + script pair). */
-  argv: string[]
+  argv: string[];
   /** Human-readable detail when status is not 'resolved'. */
-  error?: string
+  error?: string;
   /** Patch notes about what changed from the configured argv (e.g. shim unwrapping). */
-  notes: string[]
+  notes: string[];
 }
 
 /**
@@ -27,53 +27,56 @@ export interface ResolvedExecutable {
  *
  * Arguments after argv[0] are passed through unchanged.
  */
-export function resolveExecutable(argv: readonly string[], options: { cwd?: string } = {}): ResolvedExecutable | null {
+export function resolveExecutable(
+  argv: readonly string[],
+  options: { cwd?: string } = {},
+): ResolvedExecutable | null {
   if (argv.length === 0 || !argv[0]) {
     return {
-      status: 'not-found',
+      status: "not-found",
       argv: [...argv],
-      error: 'empty command',
+      error: "empty command",
       notes: [],
-    }
+    };
   }
-  const [head, ...rest] = argv
-  const resolved = resolveCommand(head, { cwd: options.cwd })
+  const [head, ...rest] = argv;
+  const resolved = resolveCommand(head, { cwd: options.cwd });
   if (!resolved) {
     return {
-      status: 'not-found',
+      status: "not-found",
       argv: [...argv],
       error: `command not found: "${head}" (looked in node_modules/.bin and PATH)`,
       notes: [],
-    }
+    };
   }
-  const lower = resolved.toLowerCase()
-  if (lower.endsWith('.cmd') || lower.endsWith('.bat')) {
-    const unwrapped = unwrapCmdShim(resolved)
+  const lower = resolved.toLowerCase();
+  if (lower.endsWith(".cmd") || lower.endsWith(".bat")) {
+    const unwrapped = unwrapCmdShim(resolved);
     if (unwrapped) {
       return {
-        status: 'resolved',
-        argv: ['node', unwrapped.scriptPath, ...rest],
+        status: "resolved",
+        argv: ["node", unwrapped.scriptPath, ...rest],
         notes: [
           `rewrote Windows shim ${path.basename(resolved)} to node ${path.basename(unwrapped.scriptPath)} (no shell involved)`,
         ],
-      }
+      };
     }
     return {
-      status: 'unresolved-shim',
+      status: "unresolved-shim",
       argv: [...argv],
       error: `found Windows command shim "${resolved}" but could not identify the script it wraps; refusing to run it through a shell. Reference the node script directly (for example: ["node", "node_modules/tool/dist/cli.js"]).`,
       notes: [],
-    }
+    };
   }
   return {
-    status: 'resolved',
+    status: "resolved",
     argv: [resolved, ...rest],
     notes: [],
-  }
+  };
 }
 
 export interface ShimUnwrap {
-  scriptPath: string
+  scriptPath: string;
 }
 
 /**
@@ -87,37 +90,42 @@ export interface ShimUnwrap {
  *   node "%~dp0\..\..\node_modules\tool\bin\run.js" %*
  */
 export function unwrapCmdShim(shimPath: string): ShimUnwrap | null {
-  let text: string
+  let text: string;
   try {
-    text = fs.readFileSync(shimPath, 'utf8')
+    text = fs.readFileSync(shimPath, "utf8");
   } catch {
-    return null
+    return null;
   }
-  if (!/%~dp0/i.test(text)) return null
-  const shimDir = path.dirname(shimPath)
+  if (!/%~dp0/i.test(text)) return null;
+  const shimDir = path.dirname(shimPath);
 
   // Quoted scripts first (npm shims quote the script unless it contains no spaces).
-  const quoted = /"%~dp0([^"]*?\.(?:js|cjs|mjs))"/i.exec(text)
+  const quoted = /"%~dp0([^"]*?\.(?:js|cjs|mjs))"/i.exec(text);
   if (quoted?.[1]) {
-    const scriptPath = normalizeShimPath(shimDir, quoted[1])
-    if (scriptPath && fs.existsSync(scriptPath)) return { scriptPath }
+    const scriptPath = normalizeShimPath(shimDir, quoted[1]);
+    if (scriptPath && fs.existsSync(scriptPath)) return { scriptPath };
   }
-  const unquoted = /%~dp0([^\s"&<>|]*?\.(?:js|cjs|mjs))/i.exec(text)
+  const unquoted = /%~dp0([^\s"&<>|]*?\.(?:js|cjs|mjs))/i.exec(text);
   if (unquoted?.[1]) {
-    const scriptPath = normalizeShimPath(shimDir, unquoted[1])
-    if (scriptPath && fs.existsSync(scriptPath)) return { scriptPath }
+    const scriptPath = normalizeShimPath(shimDir, unquoted[1]);
+    if (scriptPath && fs.existsSync(scriptPath)) return { scriptPath };
   }
-  return null
+  return null;
 }
 
 function normalizeShimPath(shimDir: string, rawTail: string): string | null {
-  if (rawTail.includes('%')) return null
+  if (rawTail.includes("%")) return null;
   // The tail starts with a backslash after %~dp0; `..` segments are legitimate.
-  if (rawTail.includes('..')) {
-    if (rawTail.replace(/[\\/]/g, '/').split('/').some((part) => part === '..')) {
+  if (rawTail.includes("..")) {
+    if (
+      rawTail
+        .replace(/[\\/]/g, "/")
+        .split("/")
+        .some((part) => part === "..")
+    ) {
       // pnpm-style relative shims are allowed exactly one level of depth
-      return path.resolve(shimDir, rawTail)
+      return path.resolve(shimDir, rawTail);
     }
   }
-  return path.resolve(shimDir, rawTail)
+  return path.resolve(shimDir, rawTail);
 }

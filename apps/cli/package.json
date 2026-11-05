@@ -2,7 +2,7 @@
   "name": "@proofgate/cli",
   "version": "1.0.0",
   "description": "ProofGate command line interface — independent verification for AI coding agents",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "type": "module",
   "bin": {
     "proofgate": "./dist/index.js"
@@ -15,8 +15,15 @@
       "import": "./dist/index.js"
     }
   },
-  "files": ["dist", "assets", "templates", "README.md"],
-  "engines": { "node": ">=22.0.0" },
+  "files": [
+    "dist",
+    "assets",
+    "templates",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "keywords": [
     "ai",
     "agents",
@@ -30,7 +37,7 @@
   ],
   "scripts": {
     "dev": "tsx src/index.ts",
-    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --banner.js \"#!/usr/bin/env node\"",
+    "build": "tsup",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {

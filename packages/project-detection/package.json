@@ -2,7 +2,7 @@
   "name": "@proofgate/project-detection",
   "version": "1.0.0",
   "description": "Project, ecosystem, tooling, and Git change detection for ProofGate",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -12,9 +12,14 @@
       "import": "./dist/index.js"
     }
   },
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "sideEffects": false,
-  "engines": { "node": ">=22.0.0" },
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "build": "tsup src/index.ts --format esm --dts --clean --sourcemap",
     "typecheck": "tsc -p tsconfig.json --noEmit"

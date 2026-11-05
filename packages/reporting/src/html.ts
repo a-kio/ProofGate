@@ -1,47 +1,47 @@
 import {
+  type CheckResult,
   formatBytes,
   formatDuration,
+  type RunReport,
   sanitizeForTerminal,
   statusGlyph,
-  type CheckResult,
-  type RunReport,
-} from '@proofgate/shared'
+} from "@proofgate/shared";
 
 function escapeHtml(value: string): string {
   return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;')
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 function statusClass(status: string): string {
-  return `status-${status.toLowerCase()}`
+  return `status-${status.toLowerCase()}`;
 }
 
 function renderCheck(check: CheckResult): string {
-  const optional = check.required ? '' : '<span class="optional">optional</span>'
-  const cached = check.cached ? '<span class="chip">cached</span>' : ''
+  const optional = check.required ? "" : '<span class="optional">optional</span>';
+  const cached = check.cached ? '<span class="chip">cached</span>' : "";
   const findings =
     check.findings.length === 0
-      ? ''
+      ? ""
       : `<ul class="findings">${check.findings
           .slice(0, 50)
           .map((finding) => {
             const location = finding.file
-              ? `<span class="loc">${escapeHtml(sanitizeForTerminal(finding.file))}${finding.line ? `:${finding.line}` : ''}</span> `
-              : ''
-            return `<li>${location}${escapeHtml(sanitizeForTerminal(finding.message))}</li>`
+              ? `<span class="loc">${escapeHtml(sanitizeForTerminal(finding.file))}${finding.line ? `:${finding.line}` : ""}</span> `
+              : "";
+            return `<li>${location}${escapeHtml(sanitizeForTerminal(finding.message))}</li>`;
           })
-          .join('')}</ul>`
+          .join("")}</ul>`;
   const output =
     check.stdout.text.trim() || check.stderr.text.trim()
       ? `<details class="output"><summary>Output tails</summary>
-          ${check.stdout.text.trim() ? `<h4>stdout</h4><pre>${escapeHtml(sanitizeForTerminal(check.stdout.text).trimEnd())}</pre>` : ''}
-          ${check.stderr.text.trim() ? `<h4>stderr</h4><pre>${escapeHtml(sanitizeForTerminal(check.stderr.text).trimEnd())}</pre>` : ''}
+          ${check.stdout.text.trim() ? `<h4>stdout</h4><pre>${escapeHtml(sanitizeForTerminal(check.stdout.text).trimEnd())}</pre>` : ""}
+          ${check.stderr.text.trim() ? `<h4>stderr</h4><pre>${escapeHtml(sanitizeForTerminal(check.stderr.text).trimEnd())}</pre>` : ""}
         </details>`
-      : ''
+      : "";
   return `<article class="check ${statusClass(check.status)}" data-status="${check.status}" data-required="${check.required}">
     <header>
       <span class="badge">${statusGlyph(check.status)} ${check.status}</span>
@@ -50,34 +50,40 @@ function renderCheck(check: CheckResult): string {
       <span class="duration">${formatDuration(check.durationMs)}</span>
     </header>
     <p class="summary">${escapeHtml(check.summary)}</p>
-    ${check.errorMessage ? `<p class="error">${escapeHtml(check.errorMessage)}</p>` : ''}
-    ${check.skipReason ? `<p class="skip">${escapeHtml(check.skipReason)}</p>` : ''}
+    ${check.errorMessage ? `<p class="error">${escapeHtml(check.errorMessage)}</p>` : ""}
+    ${check.skipReason ? `<p class="skip">${escapeHtml(check.skipReason)}</p>` : ""}
     ${findings}
     ${output}
-  </article>`
+  </article>`;
 }
 
 export function renderHtmlReport(report: RunReport): string {
-  const checks = report.checks.map(renderCheck).join('\n')
+  const checks = report.checks.map(renderCheck).join("\n");
   const criteria = report.criteria
     .map(
       (criterion) => `<tr class="${statusClass(criterion.status)}">
         <td>${statusGlyph(criterion.status)} ${criterion.status}</td>
         <td>${escapeHtml(criterion.description)}</td>
-        <td>${criterion.required ? 'yes' : 'no'}</td>
+        <td>${criterion.required ? "yes" : "no"}</td>
         <td>${escapeHtml(criterion.reason)}</td>
       </tr>`,
     )
-    .join('\n')
+    .join("\n");
   const skipped = report.skippedChecks
-    .map((skip) => `<li><strong>${escapeHtml(skip.title)}</strong> — ${escapeHtml(skip.reason)}: ${escapeHtml(skip.detail)}</li>`)
-    .join('\n')
-  const notes = report.notes.map((note) => `<li>${escapeHtml(sanitizeForTerminal(note))}</li>`).join('\n')
+    .map(
+      (skip) =>
+        `<li><strong>${escapeHtml(skip.title)}</strong> — ${escapeHtml(skip.reason)}: ${escapeHtml(skip.detail)}</li>`,
+    )
+    .join("\n");
+  const notes = report.notes
+    .map((note) => `<li>${escapeHtml(sanitizeForTerminal(note))}</li>`)
+    .join("\n");
   const evidence = report.evidence.entries
     .map(
-      (entry) => `<tr><td><code>${escapeHtml(entry.path)}</code></td><td>${entry.kind}</td><td>${entry.bytes}</td><td><code>${entry.sha256.slice(0, 16)}…</code></td></tr>`,
+      (entry) =>
+        `<tr><td><code>${escapeHtml(entry.path)}</code></td><td>${entry.kind}</td><td>${entry.bytes}</td><td><code>${entry.sha256.slice(0, 16)}…</code></td></tr>`,
     )
-    .join('\n')
+    .join("\n");
 
   return `<!doctype html>
 <html lang="en">
@@ -151,7 +157,7 @@ export function renderHtmlReport(report: RunReport): string {
   <div class="brand"><strong>ProofGate</strong><span>independent verification</span></div>
   <h1>${escapeHtml(report.project.name ?? report.project.root)}</h1>
   <div class="status-banner ${statusClass(report.status)}">${statusGlyph(report.status)} ${escapeHtml(report.status)}</div>
-  <p class="empty">${report.status === 'VERIFIED' ? 'Every required check and criterion produced passing evidence.' : report.status === 'FAILED' ? 'Required work failed. The claim of completion is not supported.' : report.status === 'INCOMPLETE' ? 'Some evidence is missing, skipped, or optional checks failed.' : 'ProofGate cannot verify this run.'}</p>
+  <p class="empty">${report.status === "VERIFIED" ? "Every required check and criterion produced passing evidence." : report.status === "FAILED" ? "Required work failed. The claim of completion is not supported." : report.status === "INCOMPLETE" ? "Some evidence is missing, skipped, or optional checks failed." : "ProofGate cannot verify this run."}</p>
   <dl class="meta">
     <div><dt>Run</dt><dd><code>${escapeHtml(report.id)}</code></dd></div>
     <div><dt>Profile</dt><dd>${escapeHtml(report.profile)}</dd></div>
@@ -159,13 +165,13 @@ export function renderHtmlReport(report: RunReport): string {
     <div><dt>Started</dt><dd>${escapeHtml(report.startedAt)}</dd></div>
     <div><dt>Duration</dt><dd>${formatDuration(report.durationMs)}</dd></div>
     <div><dt>Intent</dt><dd><code>${escapeHtml(report.intent.hash.slice(0, 24))}…</code></dd></div>
-    ${report.task ? `<div style="grid-column: 1 / -1"><dt>Task</dt><dd>${escapeHtml(report.task)}</dd></div>` : ''}
+    ${report.task ? `<div style="grid-column: 1 / -1"><dt>Task</dt><dd>${escapeHtml(report.task)}</dd></div>` : ""}
   </dl>
 
   <h2>Checks</h2>
   <div class="toolbar" role="group" aria-label="Filter checks">
     <button data-filter="all" aria-pressed="true">All (${report.checks.length})</button>
-    <button data-filter="failed" aria-pressed="false">Failed (${report.checks.filter((check) => check.status === 'FAIL' || check.status === 'ERROR').length})</button>
+    <button data-filter="failed" aria-pressed="false">Failed (${report.checks.filter((check) => check.status === "FAIL" || check.status === "ERROR").length})</button>
     <button data-filter="required" aria-pressed="false">Required</button>
     <button data-filter="optional" aria-pressed="false">Optional</button>
   </div>
@@ -174,11 +180,11 @@ export function renderHtmlReport(report: RunReport): string {
   <h2>Acceptance criteria</h2>
   ${report.criteria.length === 0 ? '<p class="empty">No acceptance criteria defined.</p>' : `<table><thead><tr><th>Status</th><th>Criterion</th><th>Required</th><th>Reason</th></tr></thead><tbody>${criteria}</tbody></table>`}
 
-  ${report.skippedChecks.length > 0 ? `<h2>Skipped checks</h2><ul>${skipped}</ul>` : ''}
-  ${report.notes.length > 0 ? `<h2>Notes</h2><ul>${notes}</ul>` : ''}
+  ${report.skippedChecks.length > 0 ? `<h2>Skipped checks</h2><ul>${skipped}</ul>` : ""}
+  ${report.notes.length > 0 ? `<h2>Notes</h2><ul>${notes}</ul>` : ""}
 
   <h2>Evidence</h2>
-  <p class="empty">Directory <code>${escapeHtml(report.evidence.dir)}</code> · manifest <code>${escapeHtml(report.evidence.manifestPath)}</code> · SHA-256 <code>${escapeHtml(report.evidence.manifestHash)}</code> · ${report.evidence.redacted ? 'secrets redacted' : 'no secrets detected'}.</p>
+  <p class="empty">Directory <code>${escapeHtml(report.evidence.dir)}</code> · manifest <code>${escapeHtml(report.evidence.manifestPath)}</code> · SHA-256 <code>${escapeHtml(report.evidence.manifestHash)}</code> · ${report.evidence.redacted ? "secrets redacted" : "no secrets detected"}.</p>
   <table><thead><tr><th>File</th><th>Kind</th><th>Bytes</th><th>SHA-256</th></tr></thead><tbody>${evidence}</tbody></table>
 
   <footer>Generated by ${escapeHtml(report.tool.name)} ${escapeHtml(report.tool.version)} · ${formatBytes(report.evidence.totalBytes)} of evidence · local-first, nothing uploaded.</footer>
@@ -204,5 +210,5 @@ export function renderHtmlReport(report: RunReport): string {
 </script>
 </body>
 </html>
-`
+`;
 }

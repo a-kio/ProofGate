@@ -12,10 +12,10 @@
       "**/*.json",
       "**/*.jsonc",
       "**/*.md",
-      "!**/dist/**",
-      "!**/node_modules/**",
-      "!**/coverage/**",
-      "!**/.proofgate/**",
+      "!**/dist",
+      "!**/node_modules",
+      "!**/coverage",
+      "!**/.proofgate",
       "!**/pnpm-lock.yaml"
     ]
   },
@@ -42,10 +42,11 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
       "suspicious": {
         "noExplicitAny": "warn",
-        "noConsole": "off"
+        "noConsole": "off",
+        "noArrayIndexKey": "warn"
       },
       "style": {
         "useConst": "error",
@@ -53,6 +54,15 @@
       },
       "complexity": {
         "noForEach": "off"
+      },
+      "a11y": {
+        "noSvgWithoutTitle": "off",
+        "useButtonType": "warn",
+        "useKeyWithClickEvents": "off",
+        "noStaticElementInteractions": "off"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "warn"
       }
     }
   },
