@@ -357,22 +357,22 @@ flowchart TB
   SDK --> SH
 ```
 
-| Package                        | Responsibility                                                        | State            |
-| ------------------------------ | --------------------------------------------------------------------- | ---------------- |
-| `@proofgate/shared`            | Types, statuses, constants, hashing, redaction, paths, text utilities | Implemented      |
-| `@proofgate/config`            | Zod schema, YAML loading, intent hashing, acceptance locking          | Implemented      |
-| `@proofgate/project-detection` | Ecosystem, package manager, tools, workspaces, Git changes            | Implemented      |
-| `@proofgate/executor`          | Shell-free process execution, output collection, binary resolution    | Implemented      |
-| `@proofgate/verification`      | Planning, checks, cache, guards, criteria, status derivation          | Implemented      |
-| `@proofgate/evidence`          | Redacted evidence bundles, manifests, verification, pruning           | Implemented      |
-| `@proofgate/storage`           | Run persistence, SQLite/JSON backends, retention                      | Implemented      |
-| `@proofgate/reporting`         | Terminal, JSON, Markdown, HTML, GitHub, JSON Schemas                  | Implemented      |
-| `@proofgate/integration-sdk`   | Atomic writes, backups, rollback, JSONC/TOML, hook wrappers           | Implemented      |
-| `@proofgate/integrations`      | Ten agent adapters and a registry                                     | Implemented      |
-| `@proofgate/core`              | End-to-end orchestration and public operations                        | Implemented      |
-| `@proofgate/mcp-server`        | Stdio MCP tools for agents                                            | Implemented      |
-| `apps/cli`                     | Commander CLI, prompts, hook formatting                               | Implemented      |
-| `apps/dashboard`               | React/Vite/Tailwind local UI                                          | Implemented      |
+| Package                        | Responsibility                                                        | State       |
+| ------------------------------ | --------------------------------------------------------------------- | ----------- |
+| `@proofgate/shared`            | Types, statuses, constants, hashing, redaction, paths, text utilities | Implemented |
+| `@proofgate/config`            | Zod schema, YAML loading, intent hashing, acceptance locking          | Implemented |
+| `@proofgate/project-detection` | Ecosystem, package manager, tools, workspaces, Git changes            | Implemented |
+| `@proofgate/executor`          | Shell-free process execution, output collection, binary resolution    | Implemented |
+| `@proofgate/verification`      | Planning, checks, cache, guards, criteria, status derivation          | Implemented |
+| `@proofgate/evidence`          | Redacted evidence bundles, manifests, verification, pruning           | Implemented |
+| `@proofgate/storage`           | Run persistence, SQLite/JSON backends, retention                      | Implemented |
+| `@proofgate/reporting`         | Terminal, JSON, Markdown, HTML, GitHub, JSON Schemas                  | Implemented |
+| `@proofgate/integration-sdk`   | Atomic writes, backups, rollback, JSONC/TOML, hook wrappers           | Implemented |
+| `@proofgate/integrations`      | Ten agent adapters and a registry                                     | Implemented |
+| `@proofgate/core`              | End-to-end orchestration and public operations                        | Implemented |
+| `@proofgate/mcp-server`        | Stdio MCP tools for agents                                            | Implemented |
+| `apps/cli`                     | Commander CLI, prompts, hook formatting                               | Implemented |
+| `apps/dashboard`               | React/Vite/Tailwind local UI                                          | Implemented |
 
 ## Design decisions
 
