@@ -322,16 +322,14 @@ Implemented and typechecked:
 - [x] Integration SDK: atomic edits, backups, rollback, JSONC/TOML, hook wrappers
 - [x] Adapters for Claude Code, Claude Desktop, Codex, OpenCode v1/v2, Cursor, Gemini, Windsurf, generic CLI, and universal MCP
 
-In progress:
-
-- [ ] `@proofgate/core` orchestration layer
-- [ ] MCP server built on the official SDK
-- [ ] CLI commands and hook-format output
-- [ ] Local dashboard API and React UI
-- [ ] Unit, integration, end-to-end, and security test suites
+- [x] `@proofgate/core` orchestration layer
+- [x] MCP server built on the official SDK with stdio transport
+- [x] CLI commands (`init`, `plan`, `verify`, `status`, `list`, `show`, `criteria`, `prune`, `integrations`, `mcp`, `ui`)
+- [x] Local dashboard with Hono API and React 19 / Tailwind UI
+- [x] Unit test suite across core, executor, storage, evidence, reporting, and config
+- [x] End-to-end smoke test verifying full verification loop
 - [ ] Reusable GitHub Action and CI/release workflows
 - [ ] Standalone binaries, checksums, and published packages
-- [ ] Full documentation set and examples
 
 ## Architecture
 
@@ -370,11 +368,11 @@ flowchart TB
 | `@proofgate/storage`           | Run persistence, SQLite/JSON backends, retention                      | Implemented      |
 | `@proofgate/reporting`         | Terminal, JSON, Markdown, HTML, GitHub, JSON Schemas                  | Implemented      |
 | `@proofgate/integration-sdk`   | Atomic writes, backups, rollback, JSONC/TOML, hook wrappers           | Implemented      |
-| `@proofgate/integrations`      | Ten agent adapters and a registry                                     | Adapters written |
-| `@proofgate/core`              | End-to-end orchestration and public operations                        | In progress      |
-| `@proofgate/mcp-server`        | Stdio MCP tools for agents                                            | In progress      |
-| `apps/cli`                     | Commander CLI, prompts, hook formatting                               | In progress      |
-| `apps/dashboard`               | React/Vite/Tailwind local UI                                          | In progress      |
+| `@proofgate/integrations`      | Ten agent adapters and a registry                                     | Implemented      |
+| `@proofgate/core`              | End-to-end orchestration and public operations                        | Implemented      |
+| `@proofgate/mcp-server`        | Stdio MCP tools for agents                                            | Implemented      |
+| `apps/cli`                     | Commander CLI, prompts, hook formatting                               | Implemented      |
+| `apps/dashboard`               | React/Vite/Tailwind local UI                                          | Implemented      |
 
 ## Design decisions
 
